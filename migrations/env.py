@@ -17,7 +17,6 @@ def run_migrations_online():
         context.configure(
             connection=connection,
             target_metadata=None,   # no ORM
-            literal_binds=True,
         )
 
         with context.begin_transaction():

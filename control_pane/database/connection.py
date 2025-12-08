@@ -3,6 +3,7 @@ import asyncpg
 from fastapi import HTTPException
 from config import Config
 
+DATABASE_URL = f"postgresql://{Config.DB_USER}:{Config.DB_PASSWORD}@{Config.DB_HOST}:5432/{Config.DB_NAME}"
 
 class Database:
     def __init__(self) -> None:
@@ -11,7 +12,7 @@ class Database:
     async def connect(self):
         """Creates the connection pool on app startup."""
         self.pool = await asyncpg.create_pool(
-            dsn=Config.DB_CONNECTION_STRING,
+            dsn=DATABASE_URL,
             min_size=2,
             max_size=20
         )
