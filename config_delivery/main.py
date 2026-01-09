@@ -39,7 +39,10 @@ async def log_unhandled_exceptions(request: Request, call_next):
 app.include_router(router)
 
 
+@app.get('/health')
+async def health():
+    return "The app is running."
 
 
 if __name__ == '__main__':
-    uvicorn.run("control_pane.main:app",host='127.0.0.1',port=8080,reload=True)
+    uvicorn.run("config_delivery.main:app",host='127.0.0.1',port=8081,reload=True)

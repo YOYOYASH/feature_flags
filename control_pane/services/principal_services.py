@@ -36,12 +36,15 @@ async def create_principal(principal:Principal, current_user =  Depends(get_curr
     created_principal  = {}
 
     if data['type'] == 'service':
-        api_key_hash = hash_api_key(generate_api_key())
+        api_key = generate_api_key()
+        api_key_hash = hash_api_key(api_key)
         query = """
                 INSERT INTO principals  (tenant_id,type,email,name,api_key_hash,role) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *
                 """
         
         created_principal = await db.fetchrow(query,data['tenant_id'],data['type'],data['email'],data['name'],api_key_hash,data['role'])
+        created_principal_dict = dict(created_principal)
+        created_principal_dict['api_key'] = api_key
 
     if data['type'] == 'user' :
         sample_hashed_password = hash_password('Sample@123')
@@ -51,5 +54,6 @@ async def create_principal(principal:Principal, current_user =  Depends(get_curr
                 """
         
         created_principal = await db.fetchrow(query,data['tenant_id'],data['type'],data['email'],data['name'],sample_hashed_password,data['role'])
+        created_principal_dict = dict(created_principal)
 
-    return DisplayPrincipal(**created_principal)
+    return DisplayPrincipal(**created_principal_dict)

@@ -20,6 +20,9 @@ class DisplayTenant(BaseModel):
     admin_email:str
     admin_password:str
 
+    class Config:
+        from_attributes = True
+
 
 class Principal(BaseModel):
     tenant_id:UUID4
@@ -38,7 +41,10 @@ class DisplayPrincipal(BaseModel):
     name:str
     role:str
     created_at:datetime
+    api_key:Optional[str] = None
 
+    class Config:
+        from_attributes = True
 
 class Flag(BaseModel):
     key:str
@@ -47,3 +53,17 @@ class Flag(BaseModel):
     rollout_percent : Optional[int] = 0
     variant_weights:Optional[dict] = {}
     rules: Optional[dict] = {}
+
+class DisplayFlag(BaseModel):
+    id:UUID4
+    key:str
+    description:Optional[str] = None
+    enabled: Optional[bool]  = False
+    rollout_percent : Optional[int] = 0
+    variant_weights:Optional[dict] = {}
+    rules: Optional[dict] = {}
+    created_by:Optional[UUID4] = None
+    created_at:datetime
+    updated_at:datetime
+
+    
