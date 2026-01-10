@@ -1,7 +1,7 @@
 from fastapi import Depends, HTTPException, Request
-from utils.service_auth import get_service_auth
-from utils.rls import get_rls_db
-from schemas import ExposurePayload
+from ..utils.service_auth import get_service_auth
+from ..utils.rls import get_rls_db
+from ..schemas import ExposurePayload
 import logging
 
 logger = logging.getLogger(__name__)
