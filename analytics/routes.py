@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from .services.exposure_service import log_exposure
+from ..config_delivery.services.exposure_service import log_exposure
 
 router = APIRouter()
 
